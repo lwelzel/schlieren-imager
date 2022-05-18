@@ -264,6 +264,7 @@ fabric.properties
 *.jpg
 *.fits
 *.html
+*.bmp
 
 ### OBJS
 *.pickle
