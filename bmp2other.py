@@ -39,7 +39,8 @@ def bmp2mp4(directory, name="mp4_from_bmp", fps=10, **kwargs):
     files = [f.as_posix() for f in files]
     files = natsorted(files)
 
-    clip = ImageSequenceClip(files, fps=fps)
+    clip = ImageSequenceClip(files, fps=fps, with_mask=True)
+    # ImageSequenceClip()
     # my moviepy needed a fix in
     # "...\moviepy\decorators.py", line 118, in use_clip_fps_by_default
     # the line
@@ -51,8 +52,9 @@ def bmp2mp4(directory, name="mp4_from_bmp", fps=10, **kwargs):
     # "...\moviepy\decorators.py", line 79, in wrapper
     clip.write_videofile(directory + f"/{name}.mp4", fps=fps, audio=False)
 
-
+def do_all_conv(dir):
+    bmp2fits(dir)
+    bmp2mp4(dir)
 
 if __name__ == '__main__':
-    bmp2fits("./example_bmps")
-    bmp2mp4("./example_bmps")
+    do_all_conv("./spray_down")

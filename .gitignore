@@ -265,6 +265,7 @@ fabric.properties
 *.fits
 *.html
 *.bmp
+*.mp4
 
 ### OBJS
 *.pickle
@@ -273,6 +274,8 @@ fabric.properties
 *.h5
 *.pdf
 *.csv
+*.zip
+*.7z
 
 # idea
 *.idea
