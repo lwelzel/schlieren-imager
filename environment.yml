@@ -1,4 +1,4 @@
-name: hci
+name: schlieren
 channels:
   - conda-forge
   - defaults
