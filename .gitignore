@@ -266,6 +266,8 @@ fabric.properties
 *.html
 *.bmp
 *.mp4
+*.tif
+*.tiff
 
 ### OBJS
 *.pickle

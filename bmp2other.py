@@ -6,15 +6,18 @@ from natsort import natsorted
 from PIL import Image
 import matplotlib.pyplot as plt
 from moviepy.editor import ImageSequenceClip
+from tqdm import tqdm
 
 def bmp2fits(directory, name="fits_from_bmp", **kwargs):
     path = Path(directory)
     files = path.rglob("*.bmp")
     files = [f.as_posix() for f in files]
-    files = natsorted(files)
+    files = np.array(natsorted(files))
 
     cube = np.zeros((len(files), *plt.imread(files[0]).shape), dtype=float)
-    for i, file in enumerate(files):
+    print(f"Saving reading cube.\tShape: {cube.shape}\tIn memory: {cube.nbytes / 2 ** 20:.0f} MB")
+    for i, file in tqdm(enumerate(files),
+                        leave=False):
         img = plt.imread(file)
         # TODO: imgs might have channels that are not needed and should be removed
         cube[i] = img
@@ -54,7 +57,24 @@ def bmp2mp4(directory, name="mp4_from_bmp", fps=10, **kwargs):
 
 def do_all_conv(dir):
     bmp2fits(dir)
-    bmp2mp4(dir)
+    # bmp2mp4(dir)
+
+def iter_over_runs(directory="./data"):
+    path = Path(directory)
+    runs = [
+        "candle_1",
+        "candle_2",
+        "cylinder",
+        "flow_down_fast",
+        "flow_down_slow",
+        "flow_paper",
+        "flow_up_fast",
+        "flow_up_slow",
+        "soldering_iron",
+    ]
+    for run in tqdm(runs):
+        do_all_conv(path / run)
+
 
 if __name__ == '__main__':
-    do_all_conv("./spray_down")
+    iter_over_runs()
